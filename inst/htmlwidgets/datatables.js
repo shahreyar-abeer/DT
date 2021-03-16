@@ -766,11 +766,11 @@ HTMLWidgets.widget({
           var $input = $('<input type="text">'), changed = false;
           if (!immediate) {
             $cell.data('input', $input).data('html', html);
-            $input.attr('title', 'Hit Ctrl+Enter to finish editing, or Esc to cancel');
+            $input.attr('title', 'Hit Enter to finish editing, or Esc to cancel');
           }
           $input.val(value);
           if (inArray(_cell.index().column, disableCols)) {
-            $input.attr('readonly', '').css('filter', 'invert(25%)');
+            $input.attr('readonly', '').css({'filter': 'invert(25%)', 'color': 'white'});
           }
           $cell.empty().append($input);
           if (cell === current) $input.focus();
@@ -807,7 +807,7 @@ HTMLWidgets.widget({
               for (var i = 0; i < target.length; i++) {
                 removeInput($(target[i]), true);
               }
-            } else if (e.keyCode === 13 && e.ctrlKey) {
+            } else if (e.keyCode === 13) {
               // Ctrl + Enter
               var cell, $cell, _cell, cellData = [];
               for (var i = 0; i < target.length; i++) {
