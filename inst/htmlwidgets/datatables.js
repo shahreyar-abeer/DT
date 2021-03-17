@@ -780,7 +780,7 @@ HTMLWidgets.widget({
           }
           $input.val(value);
           if (inArray(_cell.index().column, disableCols)) {
-            $input.attr('readonly', '').css({'filter': 'invert(10%)', 'color': 'white'});
+            $input.attr('readonly', '').css({'display': 'none'});
           }
           $cell.empty().append($input);
           if (cell === current) $input.focus();
