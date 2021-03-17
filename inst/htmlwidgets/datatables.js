@@ -750,8 +750,13 @@ HTMLWidgets.widget({
           break;
         case 'row':
           if (!editing) {
-            target = table.cells(table.cell(this).index().row, '*').nodes();
-            editing = true;
+
+            if ($(".submitButton").is(':enabled')) {
+              alert("Please submit the prevoius changes");
+            } else {
+              target = table.cells(table.cell(this).index().row, '*').nodes();
+              editing = true;
+            }
           }
           break;
         case 'column':
