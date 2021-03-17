@@ -740,14 +740,17 @@ HTMLWidgets.widget({
       // only bring up the editor when the cell itself is dbclicked, and ignore
       // other dbclick events bubbled up (e.g. from the <input>)
       if (e.target !== this) return;
-      var target = [], immediate = false;
+      var target = [], immediate = false, editing = false;
       switch (data.editable.target) {
         case 'cell':
           target = [this];
           immediate = true;  // edit will take effect immediately
           break;
         case 'row':
-          target = table.cells(table.cell(this).index().row, '*').nodes();
+          if (!editing) {
+            target = table.cells(table.cell(this).index().row, '*').nodes();
+            editing = true;
+          }
           break;
         case 'column':
           target = table.cells('*', table.cell(this).index().column).nodes();
@@ -770,7 +773,7 @@ HTMLWidgets.widget({
           }
           $input.val(value);
           if (inArray(_cell.index().column, disableCols)) {
-            $input.attr('readonly', '').css({'filter': 'invert(25%)', 'color': 'white'});
+            $input.attr('readonly', '').css({'filter': 'invert(10%)', 'color': 'white'});
           }
           $cell.empty().append($input);
           if (cell === current) $input.focus();
@@ -807,8 +810,10 @@ HTMLWidgets.widget({
               for (var i = 0; i < target.length; i++) {
                 removeInput($(target[i]), true);
               }
+              editing = false;
             } else if (e.keyCode === 13) {
-              // Ctrl + Enter
+              editing = false;
+              // Enter
               var cell, $cell, _cell, cellData = [];
               for (var i = 0; i < target.length; i++) {
                 cell = target[i]; $cell = $(cell); _cell = table.cell(cell);
