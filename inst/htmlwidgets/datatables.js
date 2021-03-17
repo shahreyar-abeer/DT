@@ -735,12 +735,14 @@ HTMLWidgets.widget({
     // run the callback function on the table instance
     if (typeof data.callback === 'function') data.callback(table);
 
+    var editing = false;
+
     // double click to edit the cell, row, column, or all cells
     if (data.editable) table.on('dblclick.dt', 'tbody td', function(e) {
       // only bring up the editor when the cell itself is dbclicked, and ignore
       // other dbclick events bubbled up (e.g. from the <input>)
       if (e.target !== this) return;
-      var target = [], immediate = false, editing = false;
+      var target = [], immediate = false;
       switch (data.editable.target) {
         case 'cell':
           target = [this];
